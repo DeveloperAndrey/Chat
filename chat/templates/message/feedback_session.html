@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Создать сессию</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <h2>Введите ваши данные</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ session_form.as_p }}
+        <button type="submit">Начать сессию</button>
+    </form>
+
+    <h3>История сессий</h3>
+    <ul>
+        {% for session in sessions %}
+            <li>
+                <a href="{% url 'feedback' session.id %}">{{ session.user_name }} ({{ session.created_at }})</a>
+            </li>
+        {% empty %}
+            <p>Пока нет активных сессий.</p>
+        {% endfor %}
+    </ul>
+</body>
+</html>
